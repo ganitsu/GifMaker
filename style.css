@@ -1,0 +1,60 @@
+body {
+    font-family: 'Arial Black', sans-serif;
+    padding: 20px;
+    background-color: #DFDBE5;
+    background-color: #DFDBE5;
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='126' height='84' viewBox='0 0 126 84'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.4'%3E%3Cpath d='M126 83v1H0v-2h40V42H0v-2h40V0h2v40h40V0h2v40h40V0h2v83zm-2-1V42H84v40h40zM82 42H42v40h40V42zm-50-6a4 4 0 1 1 0-8 4 4 0 0 1 0 8zM8 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm96 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm-42 0a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm30-12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zM20 54a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm12 24a4 4 0 1 1 0-8 4 4 0 0 1 0 8zM8 54a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm24 0a4 4 0 1 1 0-8 4 4 0 0 1 0 8zM8 78a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm12 0a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm54 0a4 4 0 1 1 0-8 4 4 0 0 1 0 8zM50 54a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm24 0a4 4 0 1 1 0-8 4 4 0 0 1 0 8zM50 78a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm54-12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm12 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zM92 54a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm24 0a4 4 0 1 1 0-8 4 4 0 0 1 0 8zM92 78a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm24-42a4 4 0 1 1 0-8 4 4 0 0 1 0 8z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    font-size: 20px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 48px;
+    margin-bottom: 30px;
+    color: #3a3a3a;
+  }
+  input[type=file] {
+    display: block;
+    margin: 0 auto 20px;
+    font-size: 24px;
+  }
+  #file-list {
+    list-style: none;
+    padding: 0;
+    margin: 10px auto;
+    max-width: 500px;
+  }
+  #file-list li {
+    margin: 10px 0;
+    padding: 16px;
+    background: #fff;
+    border: 2px solid #333;
+    cursor: move;
+    font-size: 22px;
+    text-align: center;
+  }
+  .control {
+    margin: 25px 0;
+    text-align: center;
+    font-size: 22px;
+  }
+  input[type=range] {
+    width: 80%;
+    height: 30px;
+  }
+  #preview img {
+    max-width: 100%;
+    display: block;
+    margin: 30px auto;
+    border: 5px solid #333;
+  }
+  #make-gif {
+    display: block;
+    margin: 40px auto;
+    padding: 16px 32px;
+    font-size: 32px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  

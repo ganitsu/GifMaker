@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GIF Maker Impactante</title>
+  <style>
+    body {
+      font-family: 'Arial Black', sans-serif;
+      padding: 20px;
+      background-color: #DFDBE5;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='126' height='84' viewBox='0 0 126 84'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.4'%3E%3Cpath d='...'/></g></g></svg>");
+      font-size: 20px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 48px;
+      margin-bottom: 30px;
+      color: #3a3a3a;
+    }
+    input[type=file] {
+      display: block;
+      margin: 0 auto 20px;
+      font-size: 24px;
+    }
+    #file-list {
+      list-style: none;
+      padding: 0;
+      margin: 10px auto;
+      max-width: 500px;
+    }
+    #file-list li {
+      margin: 10px 0;
+      padding: 16px;
+      background: #fff;
+      border: 2px solid #333;
+      cursor: move;
+      font-size: 22px;
+      text-align: center;
+    }
+    .control {
+      margin: 25px 0;
+      text-align: center;
+      font-size: 22px;
+    }
+    input[type=range] {
+      width: 80%;
+      height: 30px;
+    }
+    #preview, #proc-section {
+      display: inline-block;
+      vertical-align: top;
+      width: 45%;
+      text-align: center;
+    }
+    #preview img, #proc-preview {
+      max-width: 100%;
+      border: 5px solid #333;
+      margin: 20px auto;
+      display: block;
+    }
+    #make-gif {
+      display: block;
+      margin: 40px auto;
+      padding: 16px 32px;
+      font-size: 32px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #next-frame, #make-gif {
+      font-size: 24px;
+      padding: 8px 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔥 GIF MAKER 🔥</h1>
+  <input id="file-input" type="file" accept="image/*" multiple>
+  <ul id="file-list"></ul>
+
+  <div class="control">
+    <label>Duración (s): 
+      <input id="duration-slider" type="range" min="1" max="30" value="5">
+    </label>
+    <span id="duration-value">5</span>
+  </div>
+
+  <div class="control">
+    <label>FPS: 
+      <input id="fps-slider" type="range" min="1" value="5">
+    </label>
+    <span id="fps-value">5</span>
+  </div>
+
+  <div style="width:100%; text-align:center;">
+    <div id="preview">
+      <h2>Preview GIF</h2>
+      <img id="frame-display" src="" alt="Preview">
+    </div>
+
+    <div id="proc-section">
+      <h2>Preview Procesado</h2>
+      <canvas id="proc-preview" width="320" height="240"></canvas>
+      <div>
+        <button id="next-frame" type="button">🔀 Frame Aleatorio</button>
+      </div>
+      <div style="margin-top:15px;">
+        <label>Parámetro: 
+          <input id="process-slider" type="range" min="0" max="1" step="0.01" value="0.5">
+        </label>
+        <span id="process-value">0.50</span>
+      </div>
+    </div>
+  </div>
+
+  <button id="make-gif" type="button">🎬 GENERAR GIF 🎬</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.11.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/deeplab@0.2.2/dist/deeplab.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
