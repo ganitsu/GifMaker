@@ -7,7 +7,7 @@ import GifPreview from '../components/GifPreview';
 import ProcessedGifPreview from '../components/ProcessedGifPreview';
 import { generateGifBlob } from '../components/generateGifBlob';
 import { processImage } from '../components/processImage.jsx';
-import {generateUUID} from '../components/helps.js'
+import {generateUUID, applyMask} from '../components/helps.js'
 import './Home.css';
 import ImageBrushEditor from '../components/ImageBrush.jsx';
 
@@ -106,55 +106,76 @@ export default function Home() {
   };
 
 
+  function loadImage(url) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = 'Anonymous';
+      img.src = url;
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+    });
+  }
+
   const downloadImage = async () => {
     try {
-      const firstImage = await loadImage(selectedImages[0].url);
-      const width = firstImage.width;
-      const height = firstImage.height;
+      // Cargo la primera original para saber tamaño real
+      const firstOrig = await loadImage(selectedImages[0].url);
+      const width = firstOrig.naturalWidth;
+      const height = firstOrig.naturalHeight;
 
-      const croppedFrames = await Promise.all(
-        selectedImages.map(async (imgObj, i) => {
-          const base = await loadImage(imgObj.url);
-          const mask = await loadImage(maskedImages[i].url);
+      // Canvas offscreen a tamaño completo
+      const offCanvas = document.createElement('canvas');
+      offCanvas.width = width;
+      offCanvas.height = height;
+      const offCtx = offCanvas.getContext('2d', { willReadFrequently: true });
 
-          const canvas = document.createElement('canvas');
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
+      // Deshabilito suavizado de imagen (mantiene píxeles nítidos)
+      offCtx.imageSmoothingEnabled = false;
+      // offCtx.imageSmoothingQuality = 'low'; // opcional
 
-          // aplicar máscara en un solo paso
-          ctx.drawImage(base, 0, 0);
-          ctx.globalCompositeOperation = 'destination-in';
-          ctx.drawImage(mask, 0, 0);
-          ctx.globalCompositeOperation = 'source-over';
+      const frames = [];
+      for (let i = 0; i < selectedImages.length; i++) {
+        const [orig, mask] = await Promise.all([
+          loadImage(selectedImages[i].url),
+          loadImage(maskedImages[i].url),
+        ]);
 
-          return { url: canvas.toDataURL('image/png') };
-        })
-      );
+        // Dibujo original sin escalar
+        offCtx.clearRect(0, 0, width, height);
+        offCtx.drawImage(orig, 0, 0, orig.naturalWidth, orig.naturalHeight);
 
-      const gifBlob = await generateGifBlob(croppedFrames, fps, width, height);
+        // Aplico canal alfa desde la máscara
+        const imageData = offCtx.getImageData(0, 0, width, height);
+        const data = imageData.data;
 
+        offCtx.clearRect(0, 0, width, height);
+        offCtx.drawImage(mask, 0, 0, mask.naturalWidth, mask.naturalHeight);
+        const maskData = offCtx.getImageData(0, 0, width, height).data;
+
+        for (let j = 0; j < data.length; j += 4) {
+          data[j + 3] = maskData[j]; 
+        }
+        offCtx.putImageData(imageData, 0, 0);
+
+        // Extraigo dataURL en full quality
+        frames.push({ url: offCanvas.toDataURL('image/png') });
+      }
+
+      const gifBlob = await generateGifBlob(frames, fps, width, height);
       const url = URL.createObjectURL(gifBlob);
       const a = document.createElement('a');
       a.href = url;
       a.download = 'processed.gif';
-      document.body.appendChild(a);
       a.click();
-      document.body.removeChild(a);
       URL.revokeObjectURL(url);
+
     } catch (err) {
       console.error('Error generando/descargando GIF:', err);
     }
   };
 
-  const loadImage = (src) => {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.src = src;
-      img.onload = () => resolve(img);
-      img.onerror = reject;
-    });
-  };
+
+
 
 
 
