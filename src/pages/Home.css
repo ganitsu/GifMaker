@@ -1,0 +1,35 @@
+.container {
+    display: flex;
+    align-items: flex-start;
+    height: 100%; /* Ocupa toda la altura de la pantalla */
+  }
+  
+  .image-list-container {
+    width: 300px; /* Puedes ajustar el tamaño de la columna izquierda */
+    overflow-y: visible; /* Si la lista de imágenes es más grande que el contenedor, añade scroll */
+  }
+  
+  .home-sidebar {
+    flex-grow: 1; /* Esto hará que la sección de controles ocupe el espacio sobrante */
+    padding: 20px; /* Espaciado alrededor de los controles */
+    overflow-y: visible; /* Asegura que los controles se adapten si es necesario */
+  }
+
+  
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  /* overflow-x: hidden;
+  overflow-y: visible; */
+}
